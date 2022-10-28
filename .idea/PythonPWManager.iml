@@ -6,7 +6,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Day29Practice" />
-    <orderEntry type="module" module-name="20220925-PomodoroTimer" />
   </component>
 </module>
