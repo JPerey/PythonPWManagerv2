@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../20220925-PomodoroTimer/.idea/20220925-PomodoroTimer.iml" filepath="$PROJECT_DIR$/../20220925-PomodoroTimer/.idea/20220925-PomodoroTimer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Day29Practice/.idea/Day29Practice.iml" filepath="$PROJECT_DIR$/../Day29Practice/.idea/Day29Practice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/PythonPWManager.iml" filepath="$PROJECT_DIR$/.idea/PythonPWManager.iml" />
+    </modules>
+  </component>
+</project>
