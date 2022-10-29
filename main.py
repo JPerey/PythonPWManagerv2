@@ -1,5 +1,7 @@
 from tkinter import *
+from tkinter import messagebox
 import random
+import pyperclip
 
 FONT_NAME = "Arial"
 
@@ -12,15 +14,6 @@ EVERYTHING = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', '
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
-# ---------------------------- SAVE PASSWORD ------------------------------- #
-
-def add_entry():
-    saved_email = email_text.get()
-    saved_website = website_text.get()
-    saved_password = password_text.get()
-    with open("passwords.txt", mode="a") as file:
-        file.write(f"\n{saved_website} | {saved_email} | {saved_password}")
-
 def generate_pw():
     new_password = ""
     for iterator in range(0,12):
@@ -28,11 +21,24 @@ def generate_pw():
         new_password += entry
     password_text.delete(0, END)
     password_text.insert(0, new_password)
+    pyperclip.copy(new_password)
 
+# ---------------------------- SAVE PASSWORD ------------------------------- #
 
+def add_entry():
+    saved_email = email_text.get()
+    saved_website = website_text.get()
+    saved_password = password_text.get()
+    if saved_website == "" or saved_email == "" or saved_password == "":
+        messagebox.showwarning("Missing Information", "Please enter all information before saving!")
 
+    elif messagebox.askyesno("Confirmation", f"Website: {saved_website}\nEmail: {saved_email}\nPassword: "
+                                             f"{saved_password}\nIs this correct?"):
 
-
+        with open("passwords.txt", mode="a") as file:
+            file.write(f"\n{saved_website} | {saved_email} | {saved_password}")
+        website_text.delete(0, END)
+        password_text.delete(0, END)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -75,6 +81,7 @@ gen_pw_btn.grid(column=2, row=3)
 
 add_btn = Button(text="Add", highlightthickness=0, width=33, command=add_entry)
 add_btn.grid(column=1, row=4, columnspan=2)
+
 
 website_text.focus()
 
