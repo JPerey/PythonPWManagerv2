@@ -44,15 +44,41 @@ def add_entry():
             }
         }
 
+        try:
+            with open("password_data.json", mode="r") as file:
+                json_saved = json.load(file)
+                json_saved.update(json_data)
+        except FileNotFoundError as e:
+            with open("password_data.json", mode="a") as file:
+                json.dump(json_data, file, indent=4)
+
+        else:
+            with open("password_data.json", mode="w") as file:
+                json.dump(json_saved, file, indent=4)
+
+        finally:
+            website_text.delete(0, END)
+            password_text.delete(0, END)
+
+# ------------------------- SEARCH WEBSITE ---------------------------- #
+
+def search_website():
+    try:
         with open("password_data.json", mode="r") as file:
-            json_saved = json.load(file)
-            json_saved.update(json_data)
+            json_reader = json.load(file)
+            site_search_kw = website_text.get()
+    except FileNotFoundError as e:
+        messagebox.showwarning(title="File Not Found", message="Please add an entry before searching")
 
-        with open("password_data.json", mode="w") as file:
-            json.dump(json_saved, file, indent=4)
+    else:
+        try:
+            messagebox.showinfo(title="Result", message=f"Website: {site_search_kw}\nEmail: "
+                                                        f"{json_reader[site_search_kw]['email']}\nPassword: "
+                                                        f"{json_reader[site_search_kw]['password']}")
+        except KeyError as e:
+            messagebox.showwarning(title="Wrong Input", message="Input in 'website' field was not found in file")
 
-        website_text.delete(0, END)
-        password_text.delete(0, END)
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -78,8 +104,8 @@ password_label = Label(text="Password :", font=(FONT_NAME, 10))
 password_label.grid(column=0, row=3)
 
 # text fields
-website_text = Entry(width=35)
-website_text.grid(column=1, row=1, columnspan=2)
+website_text = Entry(width=19)
+website_text.grid(column=1, row=1)
 
 email_text = Entry(width=35)
 email_text.grid(column=1, row=2, columnspan=2)
@@ -95,6 +121,9 @@ gen_pw_btn.grid(column=2, row=3)
 
 add_btn = Button(text="Add", highlightthickness=0, width=33, command=add_entry)
 add_btn.grid(column=1, row=4, columnspan=2)
+
+search_btn = Button(text="Search", highlightthickness=0, width=12, command= search_website)
+search_btn.grid(column=2, row=1)
 
 
 website_text.focus()
