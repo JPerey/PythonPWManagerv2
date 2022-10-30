@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
+
 
 FONT_NAME = "Arial"
 
@@ -35,8 +37,20 @@ def add_entry():
     elif messagebox.askyesno("Confirmation", f"Website: {saved_website}\nEmail: {saved_email}\nPassword: "
                                              f"{saved_password}\nIs this correct?"):
 
-        with open("passwords.txt", mode="a") as file:
-            file.write(f"\n{saved_website} | {saved_email} | {saved_password}")
+        json_data = {
+            saved_website: {
+                "email": saved_email,
+                "password": saved_password,
+            }
+        }
+
+        with open("password_data.json", mode="r") as file:
+            json_saved = json.load(file)
+            json_saved.update(json_data)
+
+        with open("password_data.json", mode="w") as file:
+            json.dump(json_saved, file, indent=4)
+
         website_text.delete(0, END)
         password_text.delete(0, END)
 
